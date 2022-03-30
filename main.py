@@ -23,6 +23,10 @@ def afficher(choice):
     choice = var.get()
     global ven_default
     global volume_engage
+    # On cree une variable globale pour recuperer le volume reel en nombre
+    global vr
+    vr = volume_reel.get()
+
     dict_operateurs = {
         'wind': 0,
         'lyca': 1000000,
@@ -41,11 +45,16 @@ def afficher(choice):
     for x, y in dict_operateurs.items():
         if choice == x:
             # ==> for testing purposes
-            # print(y)
-            ven_default = IntVar(root, value=y)
+            print(y)
             volume_engage.destroy()
+            ven_default = IntVar(root, value=y)
             volume_engage = Entry(root, textvariable=ven_default, bg="white", font=8, width=8)
             volume_engage.grid(row=4, column=1)
+            calcul(vr, y)
+
+
+def calcul(vr, ve):
+    print(vr)
 
 
 var = StringVar(root)

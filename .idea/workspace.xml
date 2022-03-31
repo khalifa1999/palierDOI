@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5b704fa-a2d9-41cb-8acd-711551fe0481" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="c5b704fa-a2d9-41cb-8acd-711551fe0481" name="Changes" comment="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,6 +63,14 @@
       <option name="presentableId" value="Default" />
       <updated>1648198504594</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little.">
+      <created>1648721865016</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1648721865016</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -77,5 +83,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little." />
   </component>
 </project>

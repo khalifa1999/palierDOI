@@ -25,8 +25,7 @@ def afficher(choice):
     global volume_engage
     # On cree une variable globale pour recuperer le volume reel en nombre
     global vr
-    vr = volume_reel.get()
-
+    vr = vreel_default.get()
     dict_operateurs = {
         'wind': 0,
         'lyca': 1000000,
@@ -54,7 +53,23 @@ def afficher(choice):
 
 
 def calcul(vr, ve):
-    print(vr)
+    # global p1, p2, p3
+    global result, vreel_default, Resultat
+
+    p1 = fill_palierI.get()
+    p2 = fill_palierII.get()
+    p3 = fill_palierIII.get()
+    result = Resultat['text']
+    # print(vr + "-" + result)
+    if vr < ve:
+        Resultat.destroy()
+        result = vr * 5
+        print(result)
+        Resultat.destroy()
+        vreel_default = IntVar(root, value=result)
+        Resultat = Label(root, text=result, bg='red')
+        Resultat.grid(row=7, column=1)
+
 
 
 var = StringVar(root)
@@ -68,11 +83,12 @@ option.grid(row=0, column=1)
 
 
 # text field
-# default values
+# default values variables
 fill1 = IntVar(root, value=0)
 fill2 = IntVar(root, value=0)
 fill3 = IntVar(root, value=0)
 ven_default = IntVar(root, value=0)
+vreel_default = IntVar(root, value=0)
 
 # paliers
 palierI = tk.Label(root, text="Palier I", bg='orange', fg='white')
@@ -101,10 +117,14 @@ label_vengage.grid(row=3, column=1)
 volume_engage.grid(row=4, column=1)
 
 label_vreel = Label(root, text='Volume reel', bg='orange')
-volume_reel = Entry(root, bg="white", font=8, width=8)
+volume_reel = Entry(root, textvariable=vreel_default, bg="white", font=8, width=8)
 
 label_vreel.grid(row=5, column=1)
 volume_reel.grid(row=6, column=1)
+
+# Label that where the result will be displayed
+Resultat = Label(root, text="Chiffre d'affaire", bg='red')
+Resultat.grid(row=7, column=1)
 
 # buttons
 quitter = Button(root, text='quitter', command=get_out, bg='green', fg='white', font=6, width=5)

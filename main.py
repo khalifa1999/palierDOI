@@ -1,6 +1,11 @@
+from pandas import *
 import tkinter as tk
 from tkinter import *
+from tkinter import filedialog
 import sys
+import openpyxl
+from sheet2dict import Worksheet
+import pandas as pd
 
 root = tk.Tk()
 
@@ -14,8 +19,31 @@ def get_out():
 # sf = "value is %s" % var.get()
 root.title("Calcul balance")
 
-
 # initial value
+
+# The file dialog will give opportunity to select the Excel file containing our soon tobe dictionary
+filename = 'C:/Users/diop9188/Desktop/tmp/test.xlsx'
+
+
+def select_excel():
+    global filename
+    filename = filedialog.asksaveasfilename(
+        filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("Any file", "*")))
+
+
+# ws = Worksheet()
+# dictionnaire = ws.xlsx_to_dict(path=filename)
+# print(dictionnaire)
+# print(openpyxl.__version__)
+
+
+df = pd.read_excel(filename, index_col=0)
+df = df.where(pd.notnull(df), None)
+dico = df.to_dict()['Deal']
+
+
+# print(dico.values())
+
 
 # This function is linked to a dropdown list
 # Of operators and will be called everytime the user
@@ -23,24 +51,12 @@ def afficher(choice):
     choice = var.get()
     global ven_default
     global volume_engage
-    # On cree une variable globale pour recuperer le volume reel en nombre
+    # On cree une variable global pour recuperer le volume reel en nombre
     global vr
     vr = vreel_default.get()
-    dict_operateurs = {
-        'wind': 0,
-        'lyca': 1000000,
-        'free': 0,
-        'libon': 1000000,
-        'sima': 0,
-        'lebara': 0,
-        'USA retail': 0,
-        'reptel': 0,
-        'byt': 0,
-        'ofr': 864000,
-        'us/canada': 0,
-        'gap': 0
-    }
-
+    dict_operateurs = dico
+    # Modify here
+    # For the Excel file
     for x, y in dict_operateurs.items():
         if choice == x:
             # ==> for testing purposes
@@ -103,7 +119,8 @@ def calcul(vr, ve):
 
 
 var = StringVar(root)
-choices = ['wind', 'lyca', 'free', 'libon', 'sima', 'lebara', 'USA retail', 'reptel', 'byt', 'ofr', 'us/canada', 'gap']
+choices = list(dico.keys())
+# ['wind', 'lyca', 'free', 'libon', 'sima', 'lebara', 'USA retail', 'reptel', 'byt', 'ofr', 'us/canada', 'gap']
 option = tk.OptionMenu(root, var, *choices, command=afficher)
 var.set(choices[0])
 option.grid(row=0, column=1)
@@ -186,7 +203,9 @@ Resultat = Label(root, text="Chiffre d'affaire", bg='red')
 Resultat.grid(row=11, column=1)
 
 # buttons
+upload = Button(root, text='upload', command=select_excel, bg='green', fg='white', font=6, width=5)
 quitter = Button(root, text='quitter', command=get_out, bg='green', fg='white', font=6, width=5)
-quitter.grid(columnspan=4, rowspan=15)
+upload.grid(row=11, column=0)
+quitter.grid(row=11, column=2)
 
 root.mainloop()

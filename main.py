@@ -1,11 +1,10 @@
-from pandas import *
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 import sys
-import openpyxl
-from sheet2dict import Worksheet
 import pandas as pd
+from openpyxl import load_workbook
+
 
 root = tk.Tk()
 
@@ -18,10 +17,6 @@ def get_out():
 # titre root
 # sf = "value is %s" % var.get()
 root.title("Calcul balance")
-
-# initial value
-
-# The file dialog will give opportunity to select the Excel file containing our soon tobe dictionary
 filename = 'C:/Users/diop9188/Desktop/tmp/test.xlsx'
 
 
@@ -41,14 +36,16 @@ df = pd.read_excel(filename, index_col=0)
 df = df.where(pd.notnull(df), None)
 dico = df.to_dict()['Deal']
 
-
 # print(dico.values())
+# For insertion into excel file
+choix = ''
 
 
 # This function is linked to a dropdown list
 # Of operators and will be called everytime the user
 def afficher(choice):
-    choice = var.get()
+    global choix
+    choix = var.get()
     global ven_default
     global volume_engage
     # On cree une variable global pour recuperer le volume reel en nombre
@@ -58,7 +55,7 @@ def afficher(choice):
     # Modify here
     # For the Excel file
     for x, y in dict_operateurs.items():
-        if choice == x:
+        if choix == x:
             # ==> for testing purposes
             # print(y)
             volume_engage.destroy()
@@ -68,9 +65,17 @@ def afficher(choice):
             calcul(vr, y)
 
 
+posx = 1
+posy = 1
+
+
 def calcul(vr, ve):
     global fill1, fill2, fill3, Vfill1, Vfill2, Vfill3
-    global result, vreel_default, Resultat, tarif_normaldefault
+    global result, vreel_default, Resultat
+    global posx, posy
+    # Increment positions of our values when we access
+    # the excel file to write the result
+
     # Initialisons les ca de chaque paliers à 0
     ca_p1 = 0
     ca_p2 = 0
@@ -91,10 +96,18 @@ def calcul(vr, ve):
     # print(vr + "-" + result)
     # régler plus tard la double selection
     if ve > vr > 0:
+        # Excel insertion for regular price
+        excel(choix, result, posx, posy)
+        posx += 1
+        posy += 1
         Resultat.destroy()
         Resultat = Label(root, text=result, bg='red')
         Resultat.grid(row=11, column=1)
     elif ve == 0:
+        # Excel insertion for regular price
+        excel(choix, result, posx, posy)
+        posx += 1
+        posy += 1
         Resultat.destroy()
         Resultat = Label(root, text=result, bg='red')
         Resultat.grid(row=11, column=1)
@@ -113,9 +126,25 @@ def calcul(vr, ve):
                 ca_p3 = vr * p3
                 ca = ca_p1 + ca_p2 + ca_p3
                 print(ca_p3)
+                excel(choix, ca, posx, posy)
+                posx += 1
+                posy += 1
                 Resultat.destroy()
                 Resultat = Label(root, text=ca, bg='red')
                 Resultat.grid(row=11, column=1)
+
+
+def excel(key, value, posa, posb):
+    file_path = 'appending.xlsx'
+    wb = load_workbook(file_path)
+    ws = wb['Sheet']  # or wb.active
+    ws['A1'] = 'Operateurs'
+    ws['B1'] = 'CA-Deal'
+    ws['A' + str(posa)] = key
+    ws['B' + str(posb)] = value
+    wb.save(file_path)
+    # worksheet.write('A' + str(posa), key)
+    # worksheet.write('B' + str(posb), value)
 
 
 var = StringVar(root)

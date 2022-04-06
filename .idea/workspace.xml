@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5b704fa-a2d9-41cb-8acd-711551fe0481" name="Changes" comment="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little.">
+      <change afterPath="$PROJECT_DIR$/appending.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hello.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

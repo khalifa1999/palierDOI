@@ -5,7 +5,6 @@ import sys
 import pandas as pd
 from openpyxl import load_workbook
 
-
 root = tk.Tk()
 
 
@@ -65,14 +64,15 @@ def afficher(choice):
             calcul(vr, y)
 
 
-posx = 1
-posy = 1
+posx = 2
+posy = 2
+posz = 2
 
 
 def calcul(vr, ve):
     global fill1, fill2, fill3, Vfill1, Vfill2, Vfill3
     global result, vreel_default, Resultat
-    global posx, posy
+    global posx, posy, posz
     # Increment positions of our values when we access
     # the excel file to write the result
 
@@ -91,28 +91,38 @@ def calcul(vr, ve):
     tarif_normal = tarif_normaldefault.get()
     result = 0
     result = vr * tarif_normal
+    # basic if we have a deal and the max volume hasn't been reached
+    basic = ve * tarif_normal
     # result = Resultat['text']
     # print(p1)
     # print(vr + "-" + result)
-    # régler plus tard la double selection
+
     if ve > vr > 0:
         # Excel insertion for regular price
-        excel(choix, result, posx, posy)
+        # In this condition, consumed volume is inferior to the engaged one
+        diffa = basic - result
+        eval1 = 'Deal. Situation de gain : +' + str(diffa)
+        excel(choix, basic, eval1, posx, posy, posz)
         posx += 1
         posy += 1
+        posz += 1
         Resultat.destroy()
-        Resultat = Label(root, text=result, bg='red')
+        Resultat = Label(root, text=basic, bg='red')
         Resultat.grid(row=11, column=1)
     elif ve == 0:
         # Excel insertion for regular price
-        excel(choix, result, posx, posy)
+        # In this condition we didn't use a deal, we will just multiply the used volume to the regular rate
+        eval2 = 'No deal'
+        excel(choix, result, eval2, posx, posy, posz)
         posx += 1
         posy += 1
+        posz += 1
         Resultat.destroy()
         Resultat = Label(root, text=result, bg='red')
         Resultat.grid(row=11, column=1)
 
     else:
+        # This case is activate when the consumed volume is superior the regular one
         if vr > v1:
             # print(vr)
             ca_p1 = v1 * p1
@@ -126,22 +136,31 @@ def calcul(vr, ve):
                 ca_p3 = vr * p3
                 ca = ca_p1 + ca_p2 + ca_p3
                 print(ca_p3)
-                excel(choix, ca, posx, posy)
+                # tarif normal - deal
+                tn = ve * tarif_normal
+                diffc = ca - tn
+                eval3 = 'Situation de perte : -' + str(diffc)
+                excel(choix, ca, eval3, posx, posy, posz)
                 posx += 1
                 posy += 1
+                posz += 1
                 Resultat.destroy()
                 Resultat = Label(root, text=ca, bg='red')
                 Resultat.grid(row=11, column=1)
 
 
-def excel(key, value, posa, posb):
+# CA-DEAL  display 0 , MODIFY LATER
+# Rajouter evaluation
+def excel(key, value, evaluation, posa, posb, posc):
     file_path = 'appending.xlsx'
     wb = load_workbook(file_path)
     ws = wb['Sheet']  # or wb.active
     ws['A1'] = 'Operateurs'
     ws['B1'] = 'CA-Deal'
+    ws['C1'] = 'Evaluation'
     ws['A' + str(posa)] = key
     ws['B' + str(posb)] = value
+    ws['C' + str(posc)] = evaluation
     wb.save(file_path)
     # worksheet.write('A' + str(posa), key)
     # worksheet.write('B' + str(posb), value)

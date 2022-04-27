@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c5b704fa-a2d9-41cb-8acd-711551fe0481" name="Changes" comment="Added a resultat label, calcul function that will help us displaying our results is partially implemented, we will be adding other conditions little by little.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fast.py" beforeDir="false" afterPath="$PROJECT_DIR$/fast.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/hello.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sumpallier.py" beforeDir="false" afterPath="$PROJECT_DIR$/sumpallier.py" afterDir="false" />
     </list>

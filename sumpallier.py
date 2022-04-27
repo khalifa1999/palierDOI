@@ -40,10 +40,26 @@ def hors_corridors(worksheet):
             somme += worksheet['J' + str(place)].value
             print('somme' + str(somme))
         else:
-            print('somme'+str(somme))
-            worksheet['J' + str(place + 1)] = somme
+            print('somme' + str(somme))
+            worksheet['J' + str(place + 2)] = somme
             break
         place += 1
+
+
+position = 2
+
+
+def corridors(worksheet):
+    somme = 0
+    global position
+    loop = True
+    while loop:
+        if worksheet['N' + str(position)].value is not None:
+            somme += worksheet['N' + str(position)].value
+        else:
+            worksheet['N' + str(position + 1)] = somme
+            break
+        position += 1
 
 
 def calculus(fic):
@@ -72,6 +88,7 @@ def calculus(fic):
                 continue
             else:
                 hors_corridors(ws)
+                corridors(ws)
                 wb.save(fic)
                 sys.exit()
 

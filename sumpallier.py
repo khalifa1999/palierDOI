@@ -27,6 +27,24 @@ def get_out():
 posa = 3
 posb = 3
 
+# places for corridors and non corridors
+place = 2
+
+
+def hors_corridors(worksheet):
+    somme = 0
+    global place
+    loop = True
+    while loop:
+        if worksheet['J' + str(place)].value is not None:
+            somme += worksheet['J' + str(place)].value
+            print('somme' + str(somme))
+        else:
+            print('somme'+str(somme))
+            worksheet['J' + str(place + 1)] = somme
+            break
+        place += 1
+
 
 def calculus(fic):
     global posa, posb
@@ -42,10 +60,10 @@ def calculus(fic):
             cpt += ws['J' + str(posa)].value
             tab += 1
         else:
-            sub = posa-tab-1
-            ws['L' + str(posa-1)] = cpt + ws['J' + str(sub)].value
+            sub = posa - tab - 1
+            ws['L' + str(posa - 1)] = cpt + ws['J' + str(sub)].value
             print(ws['J' + str(sub)].value)
-            print('value :' + str(ws['L' + str(posa-1)]))
+            print('value :' + str(ws['L' + str(posa - 1)]))
             cpt = 0
             tab = 0
             posb += 1
@@ -53,6 +71,7 @@ def calculus(fic):
             if ws['K' + str(posb)].value is None and ws['J' + str(posa)].value is not None:
                 continue
             else:
+                hors_corridors(ws)
                 wb.save(fic)
                 sys.exit()
 

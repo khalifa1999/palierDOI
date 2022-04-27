@@ -58,8 +58,6 @@ def calculus(fic):
                     cpt += ws['J' + str(posa)].value
 
         else:
-            ws['k1'] = cpt
-            print(cpt)
             wb.save(fic)
             sys.exit()
 
